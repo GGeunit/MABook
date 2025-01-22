@@ -60,4 +60,8 @@ exports.update = async (description, price, date, category, id) => {
 
 exports.delete = async id => {
   return await pool.query(`DELETE FROM expense WHERE id = ?`, [`${id}`]);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> cb14c44f45d442c68ffb7a5f007fcddf52603efe

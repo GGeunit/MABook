@@ -11,5 +11,9 @@ class CategoryModel {
     id = m['id'];
     name = m['name'];
   }
+<<<<<<< HEAD
 
 }
+=======
+}
+>>>>>>> cb14c44f45d442c68ffb7a5f007fcddf52603efe

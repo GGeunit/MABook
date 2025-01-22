@@ -2,7 +2,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:usesCleartextTraffic="true"
-        android:label="홍당무 마켓"
+        android:label="MABook 마북"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'login.dart';
-import 'register.dart';
+import 'register_form.dart';
 
 class Intro extends StatefulWidget {
   const Intro({super.key});
@@ -48,7 +48,7 @@ class _IntroState extends State<Intro> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Get.to(() => const Register());
+                    Get.to(() => const RegisterForm());
                   },
                   child: const Text('시작하기'),
                 ),

@@ -1,26 +1,26 @@
-import 'package:carrot_flutter/src/widget/listitem/feed_list_item.dart';
+import 'package:carrot_flutter/src/widget/listitem/expense_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controller/feed_controller.dart';
+import '../../controller/expense_controller.dart';
 import '../../widget/button/category_button.dart';
 import 'create.dart';
 
-class FeedIndex extends StatefulWidget {
-  const FeedIndex({super.key});
+class ExpenseIndex extends StatefulWidget {
+  const ExpenseIndex({super.key});
   @override
-  State<FeedIndex> createState() => _FeedIndexState();
+  State<ExpenseIndex> createState() => _ExpenseIndexState();
 }
 
-class _FeedIndexState extends State<FeedIndex> {
-  final FeedController feedController =
-      Get.put<FeedController>(FeedController());
+class _ExpenseIndexState extends State<ExpenseIndex> {
+  final ExpenseController expenseController =
+      Get.put<ExpenseController>(ExpenseController());
   int _currentPage = 1;
 
   bool _onNotification(ScrollNotification scrollInfo) {
     if (scrollInfo is ScrollEndNotification &&
         scrollInfo.metrics.extentAfter == 0) {
-      feedController.feedIndex(page: ++_currentPage);
+      expenseController.expenseIndex(page: ++_currentPage);
       return true;
     }
     return false;
@@ -28,7 +28,7 @@ class _FeedIndexState extends State<FeedIndex> {
 
   Future<void> _onRefresh() async {
     _currentPage = 1;
-    await feedController.feedIndex();
+    await expenseController.expenseIndex();
   }
 
   @override
@@ -36,7 +36,7 @@ class _FeedIndexState extends State<FeedIndex> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(() => const FeedCreate());
+          Get.to(() => const ExpenseCreate());
         },
         tooltip: '항목 추가',
         shape: const CircleBorder(),
@@ -81,10 +81,10 @@ class _FeedIndexState extends State<FeedIndex> {
                     child: RefreshIndicator(
                       onRefresh: _onRefresh,
                       child: ListView.builder(
-                          itemCount: feedController.feedList.length,
+                          itemCount: expenseController.expenseList.length,
                           itemBuilder: (context, index) {
-                            final item = feedController.feedList[index];
-                            return FeedListItem(item);
+                            final item = expenseController.expenseList[index];
+                            return ExpenseListItem(item);
                           }),
                     ),
                   )))

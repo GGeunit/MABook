@@ -6,9 +6,15 @@ const upload = multer({ dest: 'storage/' });
 const authenticateToken = require('./middleware/authenticate');
 
 const webController = require('./web/controller');
+<<<<<<< HEAD
 const categoryController = require('./category/controller');
 const expenseController = require('./expense/controller');
 const userController = require('./user/controller');
+=======
+const categoryController = require('./api/category/controller');
+const expenseController = require('./api/expense/controller');
+const userController = require('./api/user/controller');
+>>>>>>> cb14c44f45d442c68ffb7a5f007fcddf52603efe
 // const fileController = require('./api/file/controller');
 
 const { logRequestTime } = require('./middleware/log');

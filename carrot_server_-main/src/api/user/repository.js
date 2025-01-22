@@ -22,4 +22,8 @@ exports.findId = async (id) => {
 exports.update = async (id, name) => {
   const query = `UPDATE user SET name = ? WHERE id = ?`;
   return await pool.query(query, [name, id]);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> cb14c44f45d442c68ffb7a5f007fcddf52603efe

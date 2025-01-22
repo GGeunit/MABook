@@ -1,37 +1,37 @@
-import 'package:carrot_flutter/src/controller/feed_controller.dart';
+import 'package:carrot_flutter/src/controller/expense_controller.dart';
 import 'package:carrot_flutter/src/controller/file_controller.dart';
-import 'package:carrot_flutter/src/widget/button/feed_image.dart';
+import 'package:carrot_flutter/src/widget/button/expense_image.dart';
 import 'package:carrot_flutter/src/widget/form/label_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class FeedCreate extends StatefulWidget {
-  const FeedCreate({super.key});
+class ExpenseCreate extends StatefulWidget {
+  const ExpenseCreate({super.key});
 
   @override
-  State<FeedCreate> createState() => _FeedCreateState();
+  State<ExpenseCreate> createState() => _ExpenseCreateState();
 }
 
-class _FeedCreateState extends State<FeedCreate> {
-  final feedController = Get.put(FeedController());
+class _ExpenseCreateState extends State<ExpenseCreate> {
+  final expenseController = Get.put(ExpenseController());
   final fileController = Get.put(FileController());
   // int? imageId;
   final _titleController = TextEditingController();
   final _priceController = TextEditingController();
   final _contentController = TextEditingController();
 
-  _submit() async {
-    final result = await feedController.feedCreate(
-      _titleController.text,
-      _priceController.text,
-      _contentController.text,
-      fileController.imageId.value,
-      // imageId,
-    );
-    if (result) {
-      Get.back();
-    }
-  }
+  // _submit() async {
+  //   final result = await expenseController.expenseCreate(
+  //     _titleController.text,
+  //     _priceController.text,
+  //     _contentController.text,
+  //     fileController.imageId.value,
+  //     // imageId,
+  //   );
+  //   if (result) {
+  //     Get.back();
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class _FeedCreateState extends State<FeedCreate> {
                   InkWell(
                     onTap: fileController.upload,
                     child: Obx(
-                      () => FeedImage(fileController.imageUrl),
+                      () => ExpenseImage(fileController.imageUrl),
                     ),
                   ),
                   // Row(
@@ -91,10 +91,10 @@ class _FeedCreateState extends State<FeedCreate> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
-              child: ElevatedButton(
-                onPressed: _submit,
-                child: const Text('작성 완료'),
-              ),
+              // child: ElevatedButton(
+              //   onPressed: _submit,
+              //   child: const Text('작성 완료'),
+              // ),
             ),
           ],
         ),

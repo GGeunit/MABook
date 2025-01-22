@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class FeedImage extends StatelessWidget {
+class ExpenseImage extends StatelessWidget {
   final String? image;
-  const FeedImage(this.image, {super.key});
+  const ExpenseImage(this.image, {super.key});
 
   @override
   Widget build(BuildContext context) {
