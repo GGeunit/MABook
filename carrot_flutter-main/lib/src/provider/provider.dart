@@ -16,7 +16,7 @@ class Provider extends GetConnect {
     // 모든 요청에 JSON 응답 형식 지정
     httpClient.addRequestModifier<void>((request) {
       request.headers['Accept'] = 'application/json';
-      if (request.url.toString().contains('/expense/')) {
+      if (request.url.toString().contains('/api/')) {
         request.headers['Authorization'] = 'Bearer ${box.read('access_token')}';
       }
       return request;

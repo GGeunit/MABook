@@ -14,28 +14,12 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final authController = Get.put(AuthController());
-  final _phoneController = TextEditingController();
+  final _idController = TextEditingController();
   final _passwordController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _phoneController.addListener(() {
-      authController.updateButtonState(_phoneController);
-    });
-  }
-
-  @override
-  void dispose() {
-    _phoneController.removeListener(() {
-      authController.updateButtonState(_phoneController);
-    });
-    super.dispose();
-  }
 
   _submit() async {
     bool result = await authController.login(
-      _phoneController.text,
+      _idController.text,
       _passwordController.text,
     );
     if (result) {
@@ -52,10 +36,9 @@ class _LoginState extends State<Login> {
         child: ListView(
           children: [
             LabelTextField(
-              label: '휴대폰 번호',
-              hintText: '휴대폰 번호를 입력해주세요',
-              keyboardType: TextInputType.phone,
-              controller: _phoneController,
+              label: '아이디',
+              hintText: '아이디를 입력해주세요',
+              controller: _idController,
             ),
             LabelTextField(
               label: '비밀번호',
