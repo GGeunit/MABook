@@ -1,4 +1,5 @@
 import 'package:carrot_flutter/src/controller/expense_controller.dart';
+import 'package:carrot_flutter/src/model/category.dart';
 import 'package:carrot_flutter/src/widget/form/label_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,8 +19,11 @@ class _ExpenseCreateState extends State<ExpenseCreate> {
   int _categoryId = 1; // 기본 카테고리 ID
 
   _submit() async {
+    CategoryModel selectedCategory =
+        CategoryModel(id: _categoryId, name: '카테고리 $_categoryId');
+
     final result = await expenseController.expenseCreate(
-      _categoryId,
+      _categoryId as CategoryModel,
       _descriptionController.text,
       _priceController.text,
       _dateController.text,

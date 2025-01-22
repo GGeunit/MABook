@@ -1,3 +1,4 @@
+import 'package:carrot_flutter/src/model/category.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,7 +25,7 @@ class _ExpenseEditState extends State<ExpenseEdit> {
   _submit() async {
     final result = await expenseController.expenseUpdate(
       widget.model.id,
-      _categoryController.text as int,
+      _categoryController.text as CategoryModel,
       _descriptionController.text,
       _priceController.text,
       _dateController.text,
@@ -38,7 +39,7 @@ class _ExpenseEditState extends State<ExpenseEdit> {
   void initState() {
     super.initState();
 // 초기화 이후 TextField에 값을 채워주기 위한 작업
-    _categoryController.text = widget.model.categoryId.toString();
+    _categoryController.text = widget.model.category.toString();
     _descriptionController.text = widget.model.description;
     _priceController.text = widget.model.price.toString();
     _dateController.text = widget.model.date.toString();

@@ -11,18 +11,21 @@ exports.index = async (req, res) => {
 
   const modifiedItems = items.map(item => ({
     ...item,
-    is_me: (userId == item.user_id)
+    is_me: (userId == item.user_id),
+    category: {
+      id: item.category_id,
+      name: item.category_name
+    }
   }));
 
   res.json({ result: 'ok', data: modifiedItems });
 }
 
 exports.store = async (req, res) => {
-  const body = req.body;
+  const { description, price, date, category } = req.body;
   const user = req.user;
-  const categoryId = req.categoryId;
 
-  const result = await repository.create(categoryId, body.description, body.price, body.date);
+  const result = await repository.create(category.id, description, price, date, user.id);
 
   if (result.affectedRows > 0) {
     res.json({ result: 'ok', data: result.insertId });
@@ -42,33 +45,37 @@ exports.show = async (req, res) => {
     writer: {
       id: item.user_id,
       name: item.user_name
-    }
+    },
+    category: {
+      id: item.category_id,
+      name: item.category_name
+    },
+    is_me: (user.id == item.user_id)
   };
 
   delete modifiedItem.user_id;
   delete modifiedItem.user_name;
-  modifiedItem['is_me'] = (user.id == item.user_id);
+  delete modifiedItem.category_id;
+  delete modifiedItem.category_name;
 
   res.json({ result: 'ok', data: modifiedItem });
 }
 
-
 exports.update = async (req, res) => {
   const id = req.params.id;
-  const body = req.body;
+  const { description, price, category, date } = req.body;
   const user = req.user;
-  const category = req.category;
 
   const item = await repository.show(id);
 
-  // if (user.id !== item.user_id) {
-  //   res.json({ result: 'fail', message: '타인의 글을 수정할 수 없습니다.' })
-  // }
+  if (user.id !== item.user_id) {
+    return res.json({ result: 'fail', message: '타인의 글을 수정할 수 없습니다.' });
+  }
 
-  const result = await repository.update(body.description, body.price, category, id);
+  const result = await repository.update(description, price, category.id, date, id);
 
   if (result.affectedRows > 0) {
-    res.json({ result: 'ok', data: body });
+    res.json({ result: 'ok', data: { id, description, price, category, date } });
   } else {
     res.json({ result: 'fail', message: '오류가 발생하였습니다.' });
   }

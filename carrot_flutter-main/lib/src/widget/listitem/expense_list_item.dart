@@ -65,6 +65,11 @@ class ExpenseListItem extends StatelessWidget {
                         ],
                       ),
                       Text(
+                        item.category.name,
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
                         '${item.price} 원',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
@@ -124,15 +129,7 @@ class ExpenseListItem extends StatelessWidget {
             right: 10,
             bottom: 0,
             child: Row(
-              children: [
-                Icon(Icons.chat_bubble_outline, color: Colors.grey, size: 16),
-                SizedBox(width: 2),
-                Text('1', style: TextStyle(color: Colors.grey)),
-                SizedBox(width: 4),
-                Icon(Icons.favorite_border, color: Colors.grey, size: 16),
-                SizedBox(width: 2),
-                Text('1', style: TextStyle(color: Colors.grey)),
-              ],
+              children: [],
             ),
           )
         ],

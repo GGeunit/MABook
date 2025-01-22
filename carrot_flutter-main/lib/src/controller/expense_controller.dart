@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:get/get.dart';
 
+import '../model/category.dart';
 import '../model/expense_model.dart';
 import '../provider/expense_provider.dart';
 
@@ -18,12 +19,13 @@ class ExpenseController extends GetxController {
   /// 새로운 피드 데이터를 추가하는 메서드
   void addData() {
     final random = Random();
-    final newItem = ExpenseModel.parse({
-      'id': random.nextInt(100),
-      'categoryId': random.nextInt(100),
-      'description': '설명 ${random.nextInt(100)}',
-      'price': 500 + random.nextInt(49500),
-    });
+    final newItem = ExpenseModel(
+      id: random.nextInt(100),
+      category: CategoryModel(id: random.nextInt(100), name: '임시 카테고리'),
+      description: '설명 ${random.nextInt(100)}',
+      price: (500 + random.nextInt(49500)).toDouble(),
+      date: DateTime.now(),
+    );
     expenseList.add(newItem);
   }
 
@@ -40,15 +42,20 @@ class ExpenseController extends GetxController {
   /// [page] 가져올 페이지 번호 (기본값: 1)
   Future<void> expenseIndex({int page = 1}) async {
     Map json = await expenseProvider.index(page);
-    List<ExpenseModel> tmp =
-        json['data'].map<ExpenseModel>((m) => ExpenseModel.parse(m)).toList();
+    List<ExpenseModel> tmp = json['data'].map<ExpenseModel>((m) {
+      // price가 문자열인 경우 double로 변환
+      if (m['price'] is String) {
+        m['price'] = double.tryParse(m['price']) ?? 0.0;
+      }
+      return ExpenseModel.parse(m);
+    }).toList();
     (page == 1) ? expenseList.assignAll(tmp) : expenseList.addAll(tmp);
   }
 
-  Future<bool> expenseCreate(
-      int categoryId, String description, String price, String date) async {
+  Future<bool> expenseCreate(CategoryModel category, String description,
+      String price, String date) async {
     Map body =
-        await expenseProvider.store(categoryId, description, price, date);
+        await expenseProvider.store(category.id, description, price, date);
     if (body['result'] == 'ok') {
       await expenseIndex();
       return true;
@@ -57,22 +64,23 @@ class ExpenseController extends GetxController {
     return false;
   }
 
-  expenseUpdate(int id, int categoryId, String description, String priceString,
-      String date) async {
+  expenseUpdate(int id, CategoryModel category, String description,
+      String priceString, String date) async {
     // price를 적절한 타입으로 변환
-    int price = int.tryParse(priceString) ?? 0; // price를 int로 변환,실패 시 0
+    double price =
+        double.tryParse(priceString) ?? 0.0; // price를 double로 변환,실패 시 0
     Map body = await expenseProvider.update(
-        id, categoryId, description, priceString, date);
+        id, category.id, description, priceString, date);
     if (body['result'] == 'ok') {
       // ID를 기반으로 리스트에서 해당 요소를 찾아 업데이트
       int index = expenseList.indexWhere((expense) => expense.id == id);
       if (index != -1) {
         // 찾은 인덱스 위치의 요소를 업데이트
         ExpenseModel updatedExpense = expenseList[index].copyWith(
-          categoryId: categoryId,
+          category: category,
           description: description,
-          price: price.toDouble(),
-          date: date,
+          price: price,
+          date: DateTime.parse(date),
         );
         expenseList[index] = updatedExpense; // 특정 인덱스의 요소를 새로운 모델로 교체
       }

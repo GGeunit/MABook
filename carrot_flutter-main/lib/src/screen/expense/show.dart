@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
-import '../../../main.dart';
 import '../../controller/expense_controller.dart';
-import '../../widget/listitem/user_list_item.dart';
 
 class ExpenseShow extends StatefulWidget {
   final int expenseId;
@@ -22,99 +21,46 @@ class _ExpenseShowState extends State<ExpenseShow> {
     expenseController.expenseShow(widget.expenseId);
   }
 
-  _chat() {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-          // slivers: [
-          //   Obx(() {
-          //     final expense = expenseController.currentExpense.value;
-          //     return SliverAppBar(
-          //       expandedHeight: MediaQuery.of(context).size.height / 3,
-          //       pinned: true,
-          //       flexibleSpace: FlexibleSpaceBar(
-          //         background: expense != null
-          //             ? Image.network(expense.imageUrl, fit: BoxFit.cover)
-          //             : null,
-          //       ),
-          //     );
-          //   }),
-          //   SliverFillRemaining(
-          //     hasScrollBody: true,
-          //     child: Obx(() {
-          //       if (expenseController.currentExpense.value != null) {
-          //         final textTheme = Theme.of(context).textTheme;
-          //         return SingleChildScrollView(
-          //           child: Column(
-          //             crossAxisAlignment: CrossAxisAlignment.start,
-          //             children: [
-          //               UserListItem(
-          //                   expenseController.currentExpense.value!.writer!),
-          //               Padding(
-          //                 padding: const EdgeInsets.all(16.0),
-          //                 child: Column(
-          //                   crossAxisAlignment: CrossAxisAlignment.start,
-          //                   children: [
-          //                     Text(
-          //                       expenseController.currentExpense.value!.title,
-          //                       style: textTheme.bodyLarge,
-          //                     ),
-          //                     const SizedBox(height: 12),
-          //                     Text(
-          //                       TimeUtil.parse(expenseController
-          //                           .currentExpense.value!.createdAt),
-          //                       style: textTheme.bodyMedium
-          //                           ?.copyWith(color: Colors.grey),
-          //                     ),
-          //                     const SizedBox(height: 12),
-          //                     Text(
-          //                       expenseController.currentExpense.value!.content,
-          //                       style: textTheme.bodyMedium,
-          //                     ),
-          //                   ],
-          //                 ),
-          //               ),
-          //             ],
-          //           ),
-          //         );
-          //       } else {
-          //         return const Center(child: CircularProgressIndicator());
-          //       }
-          //     }),
-          //   ),
-          // ],
-          ),
-      bottomNavigationBar: Obx(
-        () {
-          return Container(
-            decoration: BoxDecoration(
-                border: Border(top: BorderSide(color: Colors.grey.shade200))),
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
+      appBar: AppBar(
+        title: const Text('지출 상세'),
+      ),
+      body: Obx(() {
+        final expense = expenseController.currentExpense.value;
+        if (expense != null) {
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Text(
-                    "${expenseController.currentExpense.value?.price} 원",
-                    style: Theme.of(context).textTheme.labelLarge,
-                  ),
+                Text(
+                  '카테고리:\n${expense.category.name}',
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
-                SizedBox(
-                  width: 100,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    onPressed: _chat,
-                    child: const Text("채팅하기"),
-                  ),
+                const SizedBox(height: 16),
+                Text(
+                  '설명:\n${expense.description}',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  '가격:\n${NumberFormat.currency(locale: 'ko_KR', symbol: '₩').format(expense.price)}',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  '날짜:\n${DateFormat('yyyy-MM-dd').format(expense.date)}',
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             ),
           );
-        },
-      ),
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      }),
     );
   }
 }
