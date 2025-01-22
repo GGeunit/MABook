@@ -2,6 +2,7 @@ import 'package:carrot_flutter/src/controller/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../model/user_model.dart';
 import '../../widget/listitem/user_mypage.dart';
 import 'webpage.dart';
 
@@ -17,28 +18,33 @@ class MyPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 프로필
-            // UserMypage(UserModel(id: 1, name: '홍길동')),
-            Obx(
-              () {
-                if (userController.my.value == null) {
-                  return const CircularProgressIndicator();
-                } else {
-                  return UserMypage(userController.my.value!);
-                }
-              },
-            ),
+            UserMypage(UserModel(id: 1, name: 'test')),
+            // Obx(
+            //   () {
+            //     if (userController.my.value == null) {
+            //       return const CircularProgressIndicator();
+            //     } else {
+            //       return UserMypage(userController.my.value!);
+            //     }
+            //   },
+            // ),
+            // UserMypage(userController.my.value!),
 
             // 기타메뉴
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Text(
-                '나의 거래',
+                '나의 지출',
                 style: Theme.of(context).textTheme.labelLarge,
               ),
             ),
             ListTile(
-              title: const Text('판매내역'),
+              title: const Text('내역'),
               leading: const Icon(Icons.receipt_long_outlined),
+            ),
+            ListTile(
+              title: const Text('카테고리별'),
+              leading: const Icon(Icons.category),
             ),
             ListTile(
               title: const Text('로그아웃'),

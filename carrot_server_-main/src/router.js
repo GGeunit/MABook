@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const cors = require('cors');
+
 const multer = require('multer');
 const upload = multer({ dest: 'storage/' });
 const authenticateToken = require('./middleware/authenticate');
@@ -20,6 +22,8 @@ router.get('/page/:route', logRequestTime, webController.page);
 router.get('/category', categoryController.show);
 
 router.use(logRequestTime);
+
+router.use(cors());
 
 // router.post('/file', upload.single('file'), fileController.upload);
 // router.get('/file/:id', fileController.download);

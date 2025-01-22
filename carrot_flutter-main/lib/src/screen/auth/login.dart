@@ -46,8 +46,12 @@ class _LoginState extends State<Login> {
               controller: _passwordController,
               isObscure: true,
             ),
+            // 버튼
             ElevatedButton(
               onPressed: _submit,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 15, 200, 115),
+              ),
               child: const Text('로그인'),
             ),
           ],

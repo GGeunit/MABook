@@ -28,7 +28,7 @@ class _MyEditState extends State<MyEdit> {
   _submit() async {
     bool result = await userController.updateInfo(
       _nameController.text,
-      fileController.imageId.value,
+      // fileController.imageId.value,
     );
     if (result) {
       Get.back();

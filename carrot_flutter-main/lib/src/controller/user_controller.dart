@@ -15,8 +15,8 @@ class UserController extends GetxController {
     Get.snackbar('회원 에러', body['message'], snackPosition: SnackPosition.BOTTOM);
   }
 
-  Future<bool> updateInfo(String name, int? image) async {
-    Map body = await provider.update(name, image);
+  Future<bool> updateInfo(String name) async {
+    Map body = await provider.update(name);
     if (body['result'] == 'ok') {
       my.value = UserModel.parse(body['data']);
       return true;
