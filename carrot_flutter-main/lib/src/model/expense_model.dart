@@ -35,6 +35,9 @@ class ExpenseModel {
     DateTime? createdAt,
     bool? isMe,
     UserModel? writer,
+    required int categoryId,
+    required String description,
+    required date,
   }) {
     return ExpenseModel(
       id: id ?? this.id,

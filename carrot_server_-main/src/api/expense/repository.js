@@ -1,6 +1,6 @@
 const { pool } = require('../../database')
 
-exports.index = async (page, size, keyword, user) => {
+exports.index = async (page, size, user) => {
   const offset = (page - 1) * size;
 
   let query = `SELECT * FROM expense WHERE user_id = ?`;
@@ -26,11 +26,11 @@ exports.index = async (page, size, keyword, user) => {
   return await pool.query(query, params);
 }
 
-exports.create = async (user, category, description, price, date) => {
+exports.create = async (user, categoryId, description, price, date) => {
   const query = `INSERT INTO expense (user_id, category_id, description, price, date) VALUES (?,?,?,?,?)`;
   // image가 undefined인 경우 null로 설정
   // const imageId = image === undefined ? null : image;
-  return await pool.query(query, [user, category, description, price, date]);
+  return await pool.query(query, [user, categoryId, description, price, date]);
 }
 
 exports.show = async (id) => {

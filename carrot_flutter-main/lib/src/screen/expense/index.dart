@@ -45,7 +45,7 @@ class _ExpenseIndexState extends State<ExpenseIndex> {
       ),
       appBar: AppBar(
         centerTitle: false,
-        title: Text('시흥시 정왕동'),
+        title: Text('내 지출'),
         actions: [
           IconButton(
             onPressed: () {},
@@ -59,22 +59,6 @@ class _ExpenseIndexState extends State<ExpenseIndex> {
       ),
       body: Column(
         children: [
-          SizedBox(
-            height: 40,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: const [
-                CategoryButton(icon: Icons.menu),
-                SizedBox(width: 12),
-                CategoryButton(icon: Icons.search, title: '알바'),
-                SizedBox(width: 12),
-                CategoryButton(icon: Icons.home, title: '부동산'),
-                SizedBox(width: 12),
-                CategoryButton(icon: Icons.car_crash, title: '중고차'),
-                SizedBox(width: 12),
-              ],
-            ),
-          ),
           Expanded(
               child: Obx(() => NotificationListener<ScrollNotification>(
                     onNotification: _onNotification,

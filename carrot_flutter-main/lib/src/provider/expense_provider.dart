@@ -5,7 +5,7 @@ import 'provider.dart';
 class ExpenseProvider extends Provider {
   Future<Map> index([int page = 1]) async {
     Response response = await get(
-      '/expense',
+      '/api/expense',
       query: {'page': '$page'},
     );
     return response.body;
@@ -23,7 +23,7 @@ class ExpenseProvider extends Provider {
       'price': price,
       'date': date,
     };
-    final response = await post('/expense', body);
+    final response = await post('/api/expense', body);
     return response.body;
   }
 
@@ -40,17 +40,17 @@ class ExpenseProvider extends Provider {
       'price': price,
       'date': date,
     };
-    final response = await put('/expense/$id', body);
+    final response = await put('/api/expense/$id', body);
     return response.body;
   }
 
   Future<Map> show(int id) async {
-    final response = await get('/expense/$id');
+    final response = await get('/api/expense/$id');
     return response.body;
   }
 
   Future<Map> destroy(int id) async {
-    final response = await delete('/expense/$id');
+    final response = await delete('/api/expense/$id');
     return response.body;
   }
 }

@@ -52,23 +52,23 @@ class ExpenseListItem extends StatelessWidget {
                       //   overflow: TextOverflow.ellipsis,
                       //   style: TextStyle(fontSize: 16),
                       // ),
-                      // Row(
-                      //   children: [
-                      //     // Text(
-                      //     //   '동네이름',
-                      //     //   style: TextStyle(color: Colors.grey),
-                      //     // ),
-                      //     Text(
-                      //       TimeUtil.parse(item.createdAt),
-                      //       style: TextStyle(color: Colors.grey),
-                      //     ),
-                      //   ],
-                      // ),
-                      // Text(
-                      //   '${item.price} 원',
-                      //   style: TextStyle(
-                      //       fontSize: 16, fontWeight: FontWeight.bold),
-                      // ),
+                      Row(
+                        children: [
+                          // Text(
+                          //   '동네이름',
+                          //   style: TextStyle(color: Colors.grey),
+                          // ),
+                          // Text(
+                          //   TimeUtil.parse(item.createdAt),
+                          //   style: TextStyle(color: Colors.grey),
+                          // ),
+                        ],
+                      ),
+                      Text(
+                        '${item.price} 원',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
                     ],
                   ),
                 ),

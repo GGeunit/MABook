@@ -16,20 +16,18 @@ class ExpenseEdit extends StatefulWidget {
 
 class _ExpenseEditState extends State<ExpenseEdit> {
   final expenseController = Get.put(ExpenseController());
-  final fileController = Get.put(FileController());
-  // int? imageId;
-  final _titleController = TextEditingController();
+  final _categoryController = TextEditingController();
+  final _descriptionController = TextEditingController();
   final _priceController = TextEditingController();
-  final _contentController = TextEditingController();
+  final _dateController = TextEditingController();
 
   _submit() async {
     final result = await expenseController.expenseUpdate(
       widget.model.id,
-      _titleController.text,
+      _categoryController.text as int,
+      _descriptionController.text,
       _priceController.text,
-      _contentController.text,
-      fileController.imageId.value,
-      // imageId,
+      _dateController.text,
     );
     if (result) {
       Get.back();
@@ -40,16 +38,16 @@ class _ExpenseEditState extends State<ExpenseEdit> {
   void initState() {
     super.initState();
 // 초기화 이후 TextField에 값을 채워주기 위한 작업
-    // _titleController.text = widget.model.title;
-    // _priceController.text = widget.model.price.toString();
-    // _contentController.text = widget.model.content;
-    // fileController.imageId.value = widget.model.imageId;
+    _categoryController.text = widget.model.categoryId.toString();
+    _descriptionController.text = widget.model.description;
+    _priceController.text = widget.model.price.toString();
+    _dateController.text = widget.model.date.toString();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('물건 정보 수정')),
+      appBar: AppBar(title: const Text('내 지출 수정')),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -57,46 +55,45 @@ class _ExpenseEditState extends State<ExpenseEdit> {
             Expanded(
               child: ListView(
                 children: [
-                  // 이미지 업로드
-                  InkWell(
-                    onTap: fileController.upload,
-                    child: Obx(
-                      () => ExpenseImage(fileController.imageUrl),
-                    ),
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.grey, width: 1),
+                        ),
+                        child: const Icon(
+                          Icons.camera_alt_outlined,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
                   ),
-                  // Row(
-                  //   children: [
-                  //     Container(
-                  //       padding: const EdgeInsets.all(10),
-                  //       decoration: BoxDecoration(
-                  //         borderRadius: BorderRadius.circular(10),
-                  //         border: Border.all(color: Colors.grey, width: 1),
-                  //       ),
-                  //       child: const Icon(
-                  //         Icons.camera_alt_outlined,
-                  //         color: Colors.grey,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
                   const SizedBox(height: 16),
-                  // 제목
+                  // 카테고리
                   LabelTextField(
-                    label: '제목',
-                    hintText: '제목',
-                    controller: _titleController,
+                    label: '카테고리',
+                    hintText: '카테고리',
+                    controller: _categoryController,
+                  ), // 설명
+                  LabelTextField(
+                    label: '설명',
+                    hintText: '설명을 입력하세요',
+                    controller: _descriptionController,
+                    maxLines: 6,
                   ),
-                  // 가격
+                  // 금액
                   LabelTextField(
-                    label: '가격',
-                    hintText: '가격을 입력해주세요.',
+                    label: '금액',
+                    hintText: '금액을 입력해주세요.',
                     controller: _priceController,
                   ),
-                  // 설명
+                  // 날짜
                   LabelTextField(
-                    label: '자세한 설명',
-                    hintText: '자세한 설명을 입력하세요',
-                    controller: _contentController,
+                    label: '날짜',
+                    hintText: '날짜를 입력하세요',
+                    controller: _dateController,
                     maxLines: 6,
                   ),
                 ],

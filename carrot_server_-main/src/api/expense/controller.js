@@ -20,9 +20,9 @@ exports.index = async (req, res) => {
 exports.store = async (req, res) => {
   const body = req.body;
   const user = req.user;
-  const category = req.category;
+  const categoryId = req.categoryId;
 
-  const result = await repository.create(user.id, category.id, body.description, body.price, body.date);
+  const result = await repository.create(user.id, categoryId, body.description, body.price, body.date);
 
   if (result.affectedRows > 0) {
     res.json({ result: 'ok', data: result.insertId });

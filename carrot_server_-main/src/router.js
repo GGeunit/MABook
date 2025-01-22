@@ -35,11 +35,11 @@ router.use(authenticateToken);
 router.get('/user/my', userController.show);
 router.put('/user/my', userController.update);
 
-router.get('/expense', expenseController.index);
-router.post('/expense', expenseController.store);
-router.get('/expense/:id', expenseController.show);
-router.put('/expense/:id', expenseController.update);
-router.delete('/expense/:id', expenseController.delete);
+router.get('/api/expense', expenseController.index);
+router.post('/api/expense', expenseController.store);
+router.get('/api/expense/:id', expenseController.show);
+router.put('/api/expense/:id', expenseController.update);
+router.delete('/api/expense/:id', expenseController.delete);
 
 module.exports = router;
 
