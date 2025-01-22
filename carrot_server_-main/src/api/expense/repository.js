@@ -1,24 +1,25 @@
 const { pool } = require('../../database')
 
-exports.index = async (page, size, user) => {
+exports.index = async (page, size, keyword) => {
   const offset = (page - 1) * size;
 
-  let query = `SELECT * FROM expense WHERE user_id = ?`;
+  let query = `SELECT expense.* FROM expense LEFT JOIN user ON expense.user_id = user.user_id;`;
+
+  //let query = `SELECT * FROM expense WHERE user_id = ?`;
 
   // let query = `SELECT feed.*, u.name AS user_name, image_id FROM feed 
   //   LEFT JOIN user u ON u.id = feed.user_id 
   //   LEFT JOIN files f ON feed.image_id = f.id`;
 
   const params = [];
-  params.push(user);
 
-  // if (keyword) {
-  //   query += ` WHERE LOWER(feed.title) LIKE ? OR LOWER(feed.content) LIKE ?`;
-  //   const keywordParam = `%${keyword}%`;
-  //   params.push(keywordParam, keywordParam);
-  // }
+  if (keyword) {
+    query += ` WHERE LOWER(expense.category) LIKE ?`;
+    const keywordParam = `%${keyword}%`;
+    params.push(keywordParam, keywordParam);
+  }
 
-  query += ` ORDER BY id DESC LIMIT ? OFFSET ?`;
+  // query += ` ORDER BY expense.id DESC LIMIT ? OFFSET ?`;
 
   // params.push(size, offset);                    // MYSQL 8.0.22 버전 이하
   params.push(size.toString(), offset.toString()); // MYSQL 8.0.22 버전 이상
