@@ -15,7 +15,6 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  final fileController = Get.put(FileController());
   final authController = Get.put(AuthController());
   final _passwordController = TextEditingController();
   final _passwordConfirmController = TextEditingController();
@@ -25,7 +24,6 @@ class _RegisterFormState extends State<RegisterForm> {
     bool result = await authController.register(
       _passwordController.text,
       _nameController.text,
-      fileController.imageId.value,
     );
     if (result) {
       Get.offAll(() => const Home());
@@ -40,23 +38,13 @@ class _RegisterFormState extends State<RegisterForm> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: ListView(
           children: [
-            InkWell(
-              onTap: fileController.upload,
-              child: Obx(
-                () => CircleImage(fileController.imageUrl),
-              ),
+            //아이디
+            LabelTextField(
+              label: '아이디',
+              hintText: '아이디를 입력해주세요',
+              controller: _passwordController,
+              isObscure: true,
             ),
-            // 프로필 이미지
-            // CircleAvatar(
-            //   radius: 40,
-            //   backgroundColor: Colors.grey,
-            //   child: Icon(
-            //     Icons.camera_alt,
-            //     color: Colors.white,
-            //     size: 30,
-            //   ),
-            // ),
-            const SizedBox(height: 16),
             // 비밀번호
             LabelTextField(
               label: '비밀번호',
@@ -80,7 +68,7 @@ class _RegisterFormState extends State<RegisterForm> {
             // 버튼
             ElevatedButton(
               onPressed: _submit,
-              child: const Text('인증번호 확인'),
+              child: const Text('가입하기'),
             ),
           ],
         ),
