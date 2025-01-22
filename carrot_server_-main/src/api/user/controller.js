@@ -61,4 +61,3 @@ exports.update = async (req, res) => {
     res.json({ result: 'fail', message: '오류가 발생하였습니다.' });
   }
 }
-

@@ -1,10 +1,9 @@
 class UserModel {
-    late int id;
+  late int id;
   late String userId;
   late String password;
   late String name;
-  
-      
+
   UserModel({required this.id, required this.name});
 
   UserModel.parse(Map m) {

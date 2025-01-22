@@ -16,7 +16,7 @@ class UserListItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          CircleAvatar(backgroundImage: NetworkImage(user.profileUrl)),
+          // CircleAvatar(backgroundImage: NetworkImage(user.profileUrl)),
           const SizedBox(width: 10),
           Text(user.name),
         ],

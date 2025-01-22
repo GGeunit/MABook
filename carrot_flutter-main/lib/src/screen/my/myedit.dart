@@ -23,7 +23,7 @@ class _MyEditState extends State<MyEdit> {
   void initState() {
     super.initState();
     _nameController.text = userController.my.value!.name;
-    fileController.imageId.value = userController.my.value?.profile;
+    // fileController.imageId.value = userController.my.value?.profile;
   }
 
   _submit() async {

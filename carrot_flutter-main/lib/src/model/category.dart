@@ -11,5 +11,4 @@ class CategoryModel {
     id = m['id'];
     name = m['name'];
   }
-
 }

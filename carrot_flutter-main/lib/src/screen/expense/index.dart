@@ -1,26 +1,26 @@
-import 'package:carrot_flutter/src/widget/listitem/feed_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controller/feed_controller.dart';
+import '../../controller/expense_controller.dart';
 import '../../widget/button/category_button.dart';
+import '../../widget/listitem/expense_list_item.dart';
 import 'create.dart';
 
-class FeedIndex extends StatefulWidget {
-  const FeedIndex({super.key});
+class ExpenseIndex extends StatefulWidget {
+  const ExpenseIndex({super.key});
   @override
-  State<FeedIndex> createState() => _FeedIndexState();
+  State<ExpenseIndex> createState() => _ExpenseIndexState();
 }
 
-class _FeedIndexState extends State<FeedIndex> {
-  final FeedController feedController =
-      Get.put<FeedController>(FeedController());
+class _ExpenseIndexState extends State<ExpenseIndex> {
+  final ExpenseController expenseController =
+      Get.put<ExpenseController>(ExpenseController());
   int _currentPage = 1;
 
   bool _onNotification(ScrollNotification scrollInfo) {
     if (scrollInfo is ScrollEndNotification &&
         scrollInfo.metrics.extentAfter == 0) {
-      feedController.feedIndex(page: ++_currentPage);
+      expenseController.expenseIndex(page: ++_currentPage);
       return true;
     }
     return false;
@@ -28,7 +28,7 @@ class _FeedIndexState extends State<FeedIndex> {
 
   Future<void> _onRefresh() async {
     _currentPage = 1;
-    await feedController.feedIndex();
+    await expenseController.expenseIndex();
   }
 
   @override
@@ -36,7 +36,7 @@ class _FeedIndexState extends State<FeedIndex> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(() => const FeedCreate());
+          Get.to(() => const ExpenseCreate());
         },
         tooltip: '항목 추가',
         shape: const CircleBorder(),
@@ -45,7 +45,7 @@ class _FeedIndexState extends State<FeedIndex> {
       ),
       appBar: AppBar(
         centerTitle: false,
-        title: Text('시흥시 정왕동'),
+        title: Text('내 지출'),
         actions: [
           IconButton(
             onPressed: () {},
@@ -59,32 +59,16 @@ class _FeedIndexState extends State<FeedIndex> {
       ),
       body: Column(
         children: [
-          SizedBox(
-            height: 40,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: const [
-                CategoryButton(icon: Icons.menu),
-                SizedBox(width: 12),
-                CategoryButton(icon: Icons.search, title: '알바'),
-                SizedBox(width: 12),
-                CategoryButton(icon: Icons.home, title: '부동산'),
-                SizedBox(width: 12),
-                CategoryButton(icon: Icons.car_crash, title: '중고차'),
-                SizedBox(width: 12),
-              ],
-            ),
-          ),
           Expanded(
               child: Obx(() => NotificationListener<ScrollNotification>(
                     onNotification: _onNotification,
                     child: RefreshIndicator(
                       onRefresh: _onRefresh,
                       child: ListView.builder(
-                          itemCount: feedController.feedList.length,
+                          itemCount: expenseController.expenseList.length,
                           itemBuilder: (context, index) {
-                            final item = feedController.feedList[index];
-                            return FeedListItem(item);
+                            final item = expenseController.expenseList[index];
+                            return ExpenseListItem(item);
                           }),
                     ),
                   )))

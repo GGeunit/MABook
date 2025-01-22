@@ -1,19 +1,15 @@
-import 'package:carrot_flutter/src/model/user_model.dart';
-
+import 'category.dart';
 
 class ExpenseModel {
   late int id;
-  late int userId;
-  late int categoryId;
+  late CategoryModel category;
   late String description;
   late double? price;
   late DateTime date;
 
-  
   ExpenseModel({
     required this.id,
-    required this.userId,
-    required this.categoryId,
+    required this.category,
     required this.description,
     required this.price,
     required this.date,
@@ -21,31 +17,27 @@ class ExpenseModel {
 
   ExpenseModel.parse(Map m) {
     id = m['id'];
-    userId = m['userId'];
-    categoryId = m['categoryId'];
+    category = CategoryModel.parse(m['category']);
     description = m['description'];
-    price = m['price'];
+    price = m['price'] is String
+        ? double.tryParse(m['price'])
+        : m['price']?.toDouble();
     date = DateTime.parse(m['date']);
   }
 
   ExpenseModel copyWith({
     int? id,
-    String? title,
-    String? content,
-    int? price,
-    int? imageId,
-    DateTime? createdAt,
-    bool? isMe,
-    UserModel? writer,
+    double? price,
+    required CategoryModel? category,
+    required String description,
+    required date,
   }) {
     return ExpenseModel(
       id: id ?? this.id,
-      userId: userId ?? this.userId,
-      categoryId: categoryId ?? this.categoryId,
+      category: category ?? this.category,
       price: price ?? this.price,
       description: description ?? this.description,
       date: date ?? this.date,
-      
     );
   }
 }

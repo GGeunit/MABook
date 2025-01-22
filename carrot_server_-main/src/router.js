@@ -13,15 +13,13 @@ const userController = require('./api/user/controller');
 
 const { logRequestTime } = require('./middleware/log');
 
-router.use(logRequestTime);
 
 router.get('/', webController.home);
 router.get('/page/:route', logRequestTime, webController.page);
 
 router.get('/category', categoryController.show);
 
-router.post('/user/register', userController.register);
-router.post('/user/login', userController.login);
+router.use(logRequestTime);
 
 // router.post('/file', upload.single('file'), fileController.upload);
 // router.get('/file/:id', fileController.download);
@@ -29,18 +27,19 @@ router.post('/user/login', userController.login);
 
 // router.post('/auth/phone', apiUserController.phone);
 // router.put('/auth/phone', apiUserController.phoneVerify);
-
+router.post('/user/register', userController.register);
+router.post('/user/login', userController.login);
 
 router.use(authenticateToken);
 
 router.get('/user/my', userController.show);
 router.put('/user/my', userController.update);
 
-router.get('/expense', expenseController.index);
-router.post('/expense', expenseController.store);
-router.get('/expense/:id', expenseController.show);
-router.put('/expense/:id', expenseController.update);
-router.delete('/expense/:id', expenseController.delete);
+router.get('/api/expense', expenseController.index);
+router.post('/api/expense', expenseController.store);
+router.get('/api/expense/:id', expenseController.show);
+router.put('/api/expense/:id', expenseController.update);
+router.delete('/api/expense/:id', expenseController.delete);
 
 module.exports = router;
 
