@@ -20,8 +20,9 @@ exports.index = async (req, res) => {
 exports.store = async (req, res) => {
   const body = req.body;
   const user = req.user;
+  const category = req.category;
 
-  const result = await repository.create(user.id, body.title, body.content, body.price, body.image);
+  const result = await repository.create(user.id, category.id, body.description, body.price, body.date);
 
   if (result.affectedRows > 0) {
     res.json({ result: 'ok', data: result.insertId });
@@ -40,14 +41,12 @@ exports.show = async (req, res) => {
     ...item,
     writer: {
       id: item.user_id,
-      name: item.user_name,
-      profile_id: item.user_profile
+      name: item.user_name
     }
   };
 
   delete modifiedItem.user_id;
   delete modifiedItem.user_name;
-  delete modifiedItem.user_profile;
   modifiedItem['is_me'] = (user.id == item.user_id);
 
   res.json({ result: 'ok', data: modifiedItem });
@@ -58,14 +57,15 @@ exports.update = async (req, res) => {
   const id = req.params.id;
   const body = req.body;
   const user = req.user;
+  const category = req.category;
 
   const item = await repository.show(id);
 
-  if (user.id !== item.user_id) {
-    res.json({ result: 'fail', message: '타인의 글을 수정할 수 없습니다.' })
-  }
+  // if (user.id !== item.user_id) {
+  //   res.json({ result: 'fail', message: '타인의 글을 수정할 수 없습니다.' })
+  // }
 
-  const result = await repository.update(body.title, body.content, body.price, body.image, id);
+  const result = await repository.update(body.description, body.price, category, id);
 
   if (result.affectedRows > 0) {
     res.json({ result: 'ok', data: body });
@@ -73,6 +73,7 @@ exports.update = async (req, res) => {
     res.json({ result: 'fail', message: '오류가 발생하였습니다.' });
   }
 }
+
 exports.delete = async (req, res) => {
   const id = req.params.id;
   const user = req.user;
