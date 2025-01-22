@@ -75,6 +75,9 @@ class _RegisterFormState extends State<RegisterForm> {
             // 버튼
             ElevatedButton(
               onPressed: _submit,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+              ),
               child: const Text('로그인'),
             ),
           ],

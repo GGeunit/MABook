@@ -33,6 +33,20 @@ class LabelTextField extends StatelessWidget {
           style: const TextStyle(fontSize: 16),
           decoration: InputDecoration(
             hintText: hintText,
+            filled: true,
+            fillColor: Colors.green[50],
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.0),
+              borderSide: BorderSide.none,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.0),
+              borderSide: BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.0),
+              borderSide: BorderSide(color: Colors.green[50] ?? Colors.green),
+            ),
           ),
         ),
         const SizedBox(height: 16),

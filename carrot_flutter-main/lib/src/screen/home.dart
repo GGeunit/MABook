@@ -11,12 +11,8 @@ final List<BottomNavigationBarItem> myTabs = [
     label: '홈',
   ),
   BottomNavigationBarItem(
-    icon: Icon(Icons.feed),
-    label: '동네',
-  ),
-  BottomNavigationBarItem(
-    icon: Icon(Icons.chat_bubble_outline_rounded),
-    label: '채팅',
+    icon: Icon(Icons.bar_chart),
+    label: '통계',
   ),
   BottomNavigationBarItem(
     icon: Icon(Icons.person_outline),
@@ -25,8 +21,7 @@ final List<BottomNavigationBarItem> myTabs = [
 ];
 final List<Widget> myTabItems = [
   ExpenseIndex(),
-  Center(child: Text('동네')),
-  Center(child: Text('채팅')),
+  Center(child: Text('통계')),
   MyPage(),
 ];
 

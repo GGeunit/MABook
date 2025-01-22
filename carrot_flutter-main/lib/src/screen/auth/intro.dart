@@ -27,15 +27,15 @@ class _IntroState extends State<Intro> {
                   Image.asset('asset/image/logo.png', width: 300, height: 300),
 
                   // 슬로건
-                  const SizedBox(height: 20),
                   const Text(
-                    '당신 근처의 홍당무',
+                    'MABook 마북',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 12),
                   const Text(
-                    '동네라서 가능한 모든 것\n지금 내 동네를 선택하고 시작해보세요!',
+                    '스마트한 가계부의 시작',
                     textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -50,6 +50,9 @@ class _IntroState extends State<Intro> {
                   onPressed: () {
                     Get.to(() => const RegisterForm());
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                  ),
                   child: const Text('시작하기'),
                 ),
                 // 로그인
@@ -62,7 +65,8 @@ class _IntroState extends State<Intro> {
                       onPressed: () {
                         Get.to(() => const Login());
                       },
-                      child: const Text('로그인'),
+                      child: const Text('로그인',
+                          style: TextStyle(color: Colors.green)),
                     ),
                   ],
                 ),

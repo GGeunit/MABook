@@ -121,10 +121,15 @@ class ExpenseListItem extends StatelessWidget {
           ),
           // 채팅, 관심물건 창 배치
           Positioned(
-            right: 10,
+            right: 20,
             bottom: 0,
             child: Row(
-              children: [],
+              children: [
+                Text(
+                  formatDate(item.date),
+                  style: TextStyle(fontSize: 14),
+                ),
+              ],
             ),
           )
         ],
@@ -139,4 +144,8 @@ String formatNumber(double number) {
     RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
     (Match m) => '${m[1]},',
   );
+}
+
+String formatDate(DateTime date) {
+  return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
 }
