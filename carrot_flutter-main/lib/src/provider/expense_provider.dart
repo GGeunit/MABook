@@ -2,59 +2,55 @@ import 'package:get/get.dart';
 
 import 'provider.dart';
 
-class FeedProvider extends Provider {
+class ExpenseProvider extends Provider {
   Future<Map> index([int page = 1]) async {
     Response response = await get(
-      '/api/feed',
+      '/expense',
       query: {'page': '$page'},
     );
     return response.body;
   }
 
   Future<Map> store(
-    String title,
+    int categoryId,
+    String description,
     String price,
-    String content,
-    int? image,
+    String date,
   ) async {
     final Map<String, dynamic> body = {
-      'title': title,
+      'categoryId': categoryId,
+      'description': description,
       'price': price,
-      'content': content,
+      'date': date,
     };
-    if (image != null) {
-      body['image'] = image.toString();
-    }
-    final response = await post('/api/feed', body);
+    final response = await post('/expense', body);
     return response.body;
   }
 
   Future<Map> update(
     int id,
-    String title,
+    int categoryId,
+    String description,
     String price,
-    String content,
-    int? image,
+    String date,
   ) async {
     final Map<String, dynamic> body = {
-      'title': title,
+      'categoryId': categoryId,
+      'description': description,
       'price': price,
-      'content': content,
+      'date': date,
     };
-    if (image != null) {
-      body['image'] = image.toString();
-    }
-    final response = await put('/api/feed/$id', body);
+    final response = await put('/expense/$id', body);
     return response.body;
   }
 
   Future<Map> show(int id) async {
-    final response = await get('/api/feed/$id');
+    final response = await get('/expense/$id');
     return response.body;
   }
 
   Future<Map> destroy(int id) async {
-    final response = await delete('/api/feed/$id');
+    final response = await delete('/expense/$id');
     return response.body;
   }
 }
