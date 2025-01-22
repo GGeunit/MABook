@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const cors = require('cors');
+
 const multer = require('multer');
 const upload = multer({ dest: 'storage/' });
 const authenticateToken = require('./middleware/authenticate');
@@ -13,6 +15,7 @@ const userController = require('./api/user/controller');
 
 const { logRequestTime } = require('./middleware/log');
 
+router.use(cors());
 
 router.get('/', webController.home);
 router.get('/page/:route', logRequestTime, webController.page);
