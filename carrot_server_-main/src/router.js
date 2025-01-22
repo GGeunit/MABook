@@ -6,6 +6,7 @@ const upload = multer({ dest: 'storage/' });
 const authenticateToken = require('./middleware/authenticate');
 
 const webController = require('./web/controller');
+const categoryController = require('./category/controller');
 const expenseController = require('./expense/controller');
 const userController = require('./user/controller');
 // const fileController = require('./api/file/controller');
@@ -15,6 +16,8 @@ const { logRequestTime } = require('./middleware/log');
 
 router.get('/', webController.home);
 router.get('/page/:route', logRequestTime, webController.page);
+
+router.get('/category', categoryController.show);
 
 router.use(logRequestTime);
 
