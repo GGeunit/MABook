@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controller/auth_controller.dart';
-import '../../controller/file_controller.dart';
-import '../../widget/button/circle_image.dart';
 import '../../widget/form/label_textfield.dart';
 import '../home.dart';
 

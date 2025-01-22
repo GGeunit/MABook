@@ -11,4 +11,15 @@ class CategoryModel {
     id = m['id'];
     name = m['name'];
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CategoryModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          name == name;
+
+  @override
+  int get hashCode => id.hashCode ^ name.hashCode;
 }

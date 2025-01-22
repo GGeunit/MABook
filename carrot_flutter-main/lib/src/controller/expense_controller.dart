@@ -54,8 +54,7 @@ class ExpenseController extends GetxController {
 
   Future<bool> expenseCreate(CategoryModel category, String description,
       String price, String date) async {
-    Map body =
-        await expenseProvider.store(category.id, description, price, date);
+    Map body = await expenseProvider.store(category, description, price, date);
     if (body['result'] == 'ok') {
       await expenseIndex();
       return true;
@@ -70,7 +69,7 @@ class ExpenseController extends GetxController {
     double price =
         double.tryParse(priceString) ?? 0.0; // price를 double로 변환,실패 시 0
     Map body = await expenseProvider.update(
-        id, category.id, description, priceString, date);
+        id, category, description, priceString, date);
     if (body['result'] == 'ok') {
       // ID를 기반으로 리스트에서 해당 요소를 찾아 업데이트
       int index = expenseList.indexWhere((expense) => expense.id == id);

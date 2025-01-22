@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../main.dart';
 import '../../controller/expense_controller.dart';
 import '../../model/expense_model.dart';
 import '../../screen/expense/edit.dart';
 import '../../screen/expense/show.dart';
 import '../modal/confirm_modal.dart';
 import '../modal/more_bottom.dart';
-
-// 이미지 크기
-const double _imageSize = 110;
 
 class ExpenseListItem extends StatelessWidget {
   final ExpenseModel item;
@@ -67,12 +63,11 @@ class ExpenseListItem extends StatelessWidget {
                       Text(
                         item.category.name,
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        '${item.price} 원',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                        '${formatNumber(item.price ?? 0)} 원',
+                        style: TextStyle(fontSize: 18),
                       ),
                     ],
                   ),
@@ -136,4 +131,12 @@ class ExpenseListItem extends StatelessWidget {
       ),
     );
   }
+}
+
+String formatNumber(double number) {
+  String roundedNumber = number.round().toString();
+  return roundedNumber.replaceAllMapped(
+    RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+    (Match m) => '${m[1]},',
+  );
 }

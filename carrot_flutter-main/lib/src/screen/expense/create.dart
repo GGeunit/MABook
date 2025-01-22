@@ -16,14 +16,12 @@ class _ExpenseCreateState extends State<ExpenseCreate> {
   final _descriptionController = TextEditingController();
   final _priceController = TextEditingController();
   final _dateController = TextEditingController();
-  int _categoryId = 1; // 기본 카테고리 ID
+  CategoryModel _categoryId =
+      CategoryModel(id: 1, name: '카테고리 1'); // 기본 카테고리 ID
 
   _submit() async {
-    CategoryModel selectedCategory =
-        CategoryModel(id: _categoryId, name: '카테고리 $_categoryId');
-
     final result = await expenseController.expenseCreate(
-      _categoryId as CategoryModel,
+      _categoryId,
       _descriptionController.text,
       _priceController.text,
       _dateController.text,
@@ -45,18 +43,22 @@ class _ExpenseCreateState extends State<ExpenseCreate> {
               child: ListView(
                 children: [
                   // 카테고리 선택 (드롭다운 또는 다른 위젯으로 구현 필요)
-                  DropdownButton<int>(
+                  DropdownButton<CategoryModel>(
                     value: _categoryId,
-                    onChanged: (int? newValue) {
+                    onChanged: (CategoryModel? newValue) {
                       setState(() {
                         _categoryId = newValue!;
                       });
                     },
-                    items: <int>[1, 2, 3, 4, 5]
-                        .map<DropdownMenuItem<int>>((int value) {
-                      return DropdownMenuItem<int>(
-                        value: value,
-                        child: Text('카테고리 $value'),
+                    items: [
+                      CategoryModel(id: 1, name: '식비'),
+                      CategoryModel(id: 2, name: '교통비'),
+                      CategoryModel(id: 3, name: '기타'),
+                    ].map<DropdownMenuItem<CategoryModel>>(
+                        (CategoryModel category) {
+                      return DropdownMenuItem<CategoryModel>(
+                        value: category,
+                        child: Text(category.name),
                       );
                     }).toList(),
                   ),

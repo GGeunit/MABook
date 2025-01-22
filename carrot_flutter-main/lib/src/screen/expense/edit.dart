@@ -1,11 +1,10 @@
-import 'package:carrot_flutter/src/model/category.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../controller/expense_controller.dart';
-import '../../controller/file_controller.dart';
+import '../../model/category.dart';
 import '../../model/expense_model.dart';
-import '../../widget/button/expense_image.dart';
 import '../../widget/form/label_textfield.dart';
 
 class ExpenseEdit extends StatefulWidget {
@@ -17,15 +16,25 @@ class ExpenseEdit extends StatefulWidget {
 
 class _ExpenseEditState extends State<ExpenseEdit> {
   final expenseController = Get.put(ExpenseController());
-  final _categoryController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _priceController = TextEditingController();
   final _dateController = TextEditingController();
+  late CategoryModel _selectedCategory;
 
   _submit() async {
+    try {
+      DateTime.parse(_dateController.text);
+    } catch (e) {
+      Get.snackbar(
+        '날짜 오류',
+        '올바른 날짜 형식(YYYY-MM-DD)으로 입력해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
     final result = await expenseController.expenseUpdate(
       widget.model.id,
-      _categoryController.text as CategoryModel,
+      _selectedCategory,
       _descriptionController.text,
       _priceController.text,
       _dateController.text,
@@ -39,10 +48,10 @@ class _ExpenseEditState extends State<ExpenseEdit> {
   void initState() {
     super.initState();
 // 초기화 이후 TextField에 값을 채워주기 위한 작업
-    _categoryController.text = widget.model.category.toString();
+    _selectedCategory = widget.model.category;
     _descriptionController.text = widget.model.description;
     _priceController.text = widget.model.price.toString();
-    _dateController.text = widget.model.date.toString();
+    _dateController.text = DateFormat('yyyy-MM-dd').format(widget.model.date);
   }
 
   @override
@@ -56,28 +65,28 @@ class _ExpenseEditState extends State<ExpenseEdit> {
             Expanded(
               child: ListView(
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.grey, width: 1),
-                        ),
-                        child: const Icon(
-                          Icons.camera_alt_outlined,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ],
+                  // 카테고리 드롭다운
+                  DropdownButton<CategoryModel>(
+                    value: _selectedCategory,
+                    onChanged: (CategoryModel? newValue) {
+                      setState(() {
+                        _selectedCategory = newValue!;
+                      });
+                    },
+                    items: [
+                      CategoryModel(id: 1, name: '식비'),
+                      CategoryModel(id: 2, name: '교통비'),
+                      CategoryModel(id: 3, name: '기타'),
+                    ].map<DropdownMenuItem<CategoryModel>>(
+                        (CategoryModel category) {
+                      return DropdownMenuItem<CategoryModel>(
+                        value: category,
+                        child: Text(category.name),
+                      );
+                    }).toList(),
                   ),
                   const SizedBox(height: 16),
-                  // 카테고리
-                  LabelTextField(
-                    label: '카테고리',
-                    hintText: '카테고리',
-                    controller: _categoryController,
-                  ), // 설명
+                  // 설명
                   LabelTextField(
                     label: '설명',
                     hintText: '설명을 입력하세요',

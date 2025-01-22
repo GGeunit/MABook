@@ -36,7 +36,7 @@ class ExpenseModel {
       id: id ?? this.id,
       category: category ?? this.category,
       price: price ?? this.price,
-      description: description ?? this.description,
+      description: description,
       date: date ?? this.date,
     );
   }

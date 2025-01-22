@@ -23,9 +23,10 @@ exports.index = async (req, res) => {
 
 exports.store = async (req, res) => {
   const { description, price, date, category } = req.body;
+  const categoryId = parseInt(category.id);
   const user = req.user;
 
-  const result = await repository.create(category.id, description, price, date, user.id);
+  const result = await repository.create(user.id, categoryId, description, price, date);
 
   if (result.affectedRows > 0) {
     res.json({ result: 'ok', data: result.insertId });
@@ -65,6 +66,7 @@ exports.update = async (req, res) => {
   const id = req.params.id;
   const { description, price, category, date } = req.body;
   const user = req.user;
+  const formattedDate = date.split('T')[0];
 
   const item = await repository.show(id);
 
@@ -72,7 +74,7 @@ exports.update = async (req, res) => {
     return res.json({ result: 'fail', message: '타인의 글을 수정할 수 없습니다.' });
   }
 
-  const result = await repository.update(description, price, category.id, date, id);
+  const result = await repository.update(description, price, category.id, formattedDate, id);
 
   if (result.affectedRows > 0) {
     res.json({ result: 'ok', data: { id, description, price, category, date } });

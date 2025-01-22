@@ -18,7 +18,7 @@ exports.index = async (page, size, keyword) => {
     params.push(keywordParam, keywordParam);
   }
 
-  query += ` ORDER BY e.id DESC LIMIT ? OFFSET ?`;
+  query += ` ORDER BY e.id ASC LIMIT ? OFFSET ?`;
   params.push(size.toString(), offset.toString());
 
   return await pool.query(query, params);
@@ -26,7 +26,8 @@ exports.index = async (page, size, keyword) => {
 
 exports.create = async (userId, categoryId, description, price, date) => {
   const query = `INSERT INTO expense (user_id, category_id, description, price, date) VALUES (?, ?, ?, ?, ?)`;
-  return await pool.query(query, [userId, categoryId, description, price, date]);
+  const numericPrice = parseFloat(price);
+  return await pool.query(query, [userId, categoryId, description, numericPrice, date]);
 }
 
 exports.show = async (id) => {
@@ -41,9 +42,9 @@ exports.show = async (id) => {
   return (result.length === 0) ? null : result[0];
 }
 
-exports.update = async (description, price, date, categoryId, id) => {
-  const query = `UPDATE expense SET description = ?, price = ?, date = ?, category_id = ? WHERE id = ?`;
-  const params = [description, price, date, categoryId, id];
+exports.update = async (description, price, categoryId, date, id) => {
+  const query = `UPDATE expense SET description = ?, price = ?, category_id = ?, date = ? WHERE id = ?`;
+  const params = [description, price, categoryId, date, id];
   return await pool.query(query, params);
 }
 
