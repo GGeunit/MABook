@@ -22,8 +22,8 @@ class UserMypage extends StatelessWidget {
             Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: NetworkImage(user.profileUrl),
-                ),
+                    // backgroundImage: NetworkImage(user.profileUrl),
+                    ),
                 const SizedBox(width: 12),
                 Text(
                   user.name,

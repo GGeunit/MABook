@@ -2,39 +2,12 @@ const repository = require('./repository');
 const crypto = require('crypto');
 const jwt = require('./jwt');
 
-exports.phone = (req, res) => {
-  const now = new Date();
-
-  now.setMinutes(now.getMinutes() + 3);
-  const expiredTime = now.toISOString().replace('T', ' ').substring(0, 19);
-
-  res.json({ result: 'ok', expired: expiredTime });
-}
-
-exports.phoneVerify = (req, res) => {
-  const { code } = req.body;
-
-  if (code == '1234') {
-    res.json({ result: "ok", message: "성공" });
-    return;
-  }
-  res.json({ result: "fail", message: "인증번호가 맞지 않습니다." });
-}
-
-
-
 exports.register = async (req, res) => {
-  const { phone, password, name } = req.body;
-
-  let { count } = await repository.findByPhone(phone);
-
-  if (count > 0) {
-    return res.json({ result: "fail", message: '중복된 번호가  존재합니다.' });
-  }
+  const { userId, password, name } = req.body;
 
   const result = await crypto.pbkdf2Sync(password, process.env.SALT_KEY, 50, 100, 'sha512');
 
-  const { affectedRows, insertId } = await repository.register(phone, result.toString('base64'), name);
+  const { affectedRows, insertId } = await repository.register(userId, result.toString('base64'), name);
 
   if (affectedRows > 0) {
     const data = await jwt({ id: insertId, name });
@@ -46,14 +19,14 @@ exports.register = async (req, res) => {
 
 
 exports.login = async (req, res) => {
-  const { phone, password } = req.body;
+  const { userId, password } = req.body;
 
   const result = await crypto.pbkdf2Sync(password, process.env.SALT_KEY, 50, 100, 'sha512');
 
-  const item = await repository.login(phone, result.toString('base64'));
+  const item = await repository.login(userId, result.toString('base64'));
 
   if (item == null) {
-    res.json({ result: 'fail', message: '휴대폰 번호 혹은 비밀번호를 확인해 주세요' })
+    res.json({ result: 'fail', message: '아이디 혹은 비밀번호를 확인해 주세요.' })
   } else {
     const data = await jwt({ id: item.id, name: item.name });
     res.json({ result: 'ok', access_token: data })
@@ -76,10 +49,10 @@ exports.show = async (req, res) => {
   }
 }
 exports.update = async (req, res) => {
-  const { name, profile_id } = req.body;
+  const { name } = req.body;
   const user = req.user;
 
-  const result = await repository.update(user.id, name, profile_id);
+  const result = await repository.update(user.id, name);
 
   if (result.affectedRows > 0) {
     const item = await repository.findId(user.id);
@@ -88,4 +61,3 @@ exports.update = async (req, res) => {
     res.json({ result: 'fail', message: '오류가 발생하였습니다.' });
   }
 }
-

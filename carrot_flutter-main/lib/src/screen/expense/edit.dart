@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controller/feed_controller.dart';
+import '../../controller/expense_controller.dart';
 import '../../controller/file_controller.dart';
-import '../../model/feed_model.dart';
-import '../../widget/button/feed_image.dart';
+import '../../model/expense_model.dart';
+import '../../widget/button/expense_image.dart';
 import '../../widget/form/label_textfield.dart';
 
-class FeedEdit extends StatefulWidget {
-  final FeedModel model;
-  const FeedEdit(this.model, {super.key});
+class ExpenseEdit extends StatefulWidget {
+  final ExpenseModel model;
+  const ExpenseEdit(this.model, {super.key});
   @override
-  State<FeedEdit> createState() => _FeedEditState();
+  State<ExpenseEdit> createState() => _ExpenseEditState();
 }
 
-class _FeedEditState extends State<FeedEdit> {
-  final feedController = Get.put(FeedController());
+class _ExpenseEditState extends State<ExpenseEdit> {
+  final expenseController = Get.put(ExpenseController());
   final fileController = Get.put(FileController());
   // int? imageId;
   final _titleController = TextEditingController();
@@ -23,7 +23,7 @@ class _FeedEditState extends State<FeedEdit> {
   final _contentController = TextEditingController();
 
   _submit() async {
-    final result = await feedController.feedUpdate(
+    final result = await expenseController.expenseUpdate(
       widget.model.id,
       _titleController.text,
       _priceController.text,
@@ -40,10 +40,10 @@ class _FeedEditState extends State<FeedEdit> {
   void initState() {
     super.initState();
 // 초기화 이후 TextField에 값을 채워주기 위한 작업
-    _titleController.text = widget.model.title;
-    _priceController.text = widget.model.price.toString();
-    _contentController.text = widget.model.content;
-    fileController.imageId.value = widget.model.imageId;
+    // _titleController.text = widget.model.title;
+    // _priceController.text = widget.model.price.toString();
+    // _contentController.text = widget.model.content;
+    // fileController.imageId.value = widget.model.imageId;
   }
 
   @override
@@ -61,7 +61,7 @@ class _FeedEditState extends State<FeedEdit> {
                   InkWell(
                     onTap: fileController.upload,
                     child: Obx(
-                      () => FeedImage(fileController.imageUrl),
+                      () => ExpenseImage(fileController.imageUrl),
                     ),
                   ),
                   // Row(

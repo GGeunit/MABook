@@ -2,7 +2,7 @@ import 'package:carrot_flutter/src/controller/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'feed/index.dart';
+import 'expense/index.dart';
 import 'my/mypage.dart';
 
 final List<BottomNavigationBarItem> myTabs = [
@@ -24,7 +24,7 @@ final List<BottomNavigationBarItem> myTabs = [
   ),
 ];
 final List<Widget> myTabItems = [
-  FeedIndex(),
+  ExpenseIndex(),
   Center(child: Text('동네')),
   Center(child: Text('채팅')),
   MyPage(),
