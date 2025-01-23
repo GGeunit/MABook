@@ -29,9 +29,11 @@ router.use(logRequestTime);
 // router.put('/auth/phone', apiUserController.phoneVerify);
 router.post('/user/register', userController.register);
 router.post('/user/login', userController.login);
-router.get('/user/logout', userController.logout);
 
 router.use(authenticateToken);
+
+router.get('/user/my', userController.show);
+router.put('/user/my', userController.update);
 
 router.get('/api/expense', expenseController.index);
 router.post('/api/expense', expenseController.store);
@@ -39,9 +41,9 @@ router.get('/api/expense/:id', expenseController.show);
 router.put('/api/expense/:id', expenseController.update);
 router.delete('/api/expense/:id', expenseController.delete);
 
-router.get('/api/user/my', userController.show);
-router.put('/api/user/my', userController.update);
-router.put('/api/user/change-password', userController.changePassword);
+router.get('/api/category', categoryController.show);
+router.get('/api/category/:categoryId/expenses', categoryController.getCategoryExpenses);
+router.get('/api/category/:categoryId', categoryController.getCategoryById);
+
 
 module.exports = router;
-
