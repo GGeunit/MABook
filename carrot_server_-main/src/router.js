@@ -41,5 +41,9 @@ router.get('/api/expense/:id', expenseController.show);
 router.put('/api/expense/:id', expenseController.update);
 router.delete('/api/expense/:id', expenseController.delete);
 
-module.exports = router;
+router.get('/api/category', categoryController.show);
+router.get('/api/category/:categoryId/expenses', categoryController.getCategoryExpenses);
+router.get('/api/category/:categoryId', categoryController.getCategoryById);
 
+
+module.exports = router;

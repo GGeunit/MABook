@@ -2,7 +2,6 @@ import 'package:carrot_flutter/src/controller/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../widget/listitem/user_mypage.dart';
 import 'webpage.dart';
 
 class MyPage extends StatelessWidget {
@@ -10,7 +9,7 @@ class MyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userController = Get.put(UserController());
+    Get.put(UserController());
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -18,26 +17,26 @@ class MyPage extends StatelessWidget {
           children: [
             // 프로필
             // UserMypage(UserModel(id: 1, name: '홍길동')),
-            Obx(
-              () {
-                if (userController.my.value == null) {
-                  return const CircularProgressIndicator();
-                } else {
-                  return UserMypage(userController.my.value!);
-                }
-              },
-            ),
+            // Obx(
+            //   () {
+            //     if (userController.my.value == null) {
+            //       return const CircularProgressIndicator();
+            //     } else {
+            //       return UserMypage(userController.my.value!);
+            //     }
+            //   },
+            // ),
 
             // 기타메뉴
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Text(
-                '나의 거래',
+                '마이페이지',
                 style: Theme.of(context).textTheme.labelLarge,
               ),
             ),
             ListTile(
-              title: const Text('판매내역'),
+              title: const Text('지출내역'),
               leading: const Icon(Icons.receipt_long_outlined),
             ),
             ListTile(

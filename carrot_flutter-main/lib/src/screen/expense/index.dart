@@ -33,44 +33,48 @@ class _ExpenseIndexState extends State<ExpenseIndex> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        title: const Text(
+          '내 가계부',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.to(() => const ExpenseCreate());
         },
-        tooltip: '항목 추가',
-        shape: const CircleBorder(),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.green,
         child: const Icon(Icons.add, color: Colors.white),
-      ),
-      appBar: AppBar(
-        centerTitle: false,
-        title: Text('내 지출'),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.search),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.notifications_none_rounded),
-          ),
-        ],
       ),
       body: Column(
         children: [
           Expanded(
-              child: Obx(() => NotificationListener<ScrollNotification>(
-                    onNotification: _onNotification,
-                    child: RefreshIndicator(
-                      onRefresh: _onRefresh,
-                      child: ListView.builder(
-                          itemCount: expenseController.expenseList.length,
-                          itemBuilder: (context, index) {
-                            final item = expenseController.expenseList[index];
-                            return ExpenseListItem(item);
-                          }),
+            child: Obx(() => NotificationListener<ScrollNotification>(
+                  onNotification: _onNotification,
+                  child: RefreshIndicator(
+                    onRefresh: _onRefresh,
+                    child: ListView.separated(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      itemCount: expenseController.expenseList.length,
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 12),
+                      itemBuilder: (context, index) {
+                        final item = expenseController.expenseList[index];
+                        return ExpenseListItem(item);
+                      },
                     ),
-                  )))
+                  ),
+                )),
+          ),
+          Container(
+            decoration: const BoxDecoration(
+              border: Border(
+                top: BorderSide(color: Colors.grey, width: 0.5),
+              ),
+            ),
+          ),
         ],
       ),
     );

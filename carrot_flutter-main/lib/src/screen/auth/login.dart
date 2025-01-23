@@ -48,6 +48,9 @@ class _LoginState extends State<Login> {
             ),
             ElevatedButton(
               onPressed: _submit,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+              ),
               child: const Text('로그인'),
             ),
           ],
