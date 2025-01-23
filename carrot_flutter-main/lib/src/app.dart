@@ -11,7 +11,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: isLogin ? Home() : Intro(),
+      // home: isLogin ? Home() : Intro(),
+      initialRoute: isLogin ? '/home' : '/intro',
+      getPages: [
+        GetPage(name: '/home', page: () => Home()),
+        GetPage(name: '/intro', page: () => Intro()),
+      ],
       theme: ThemeData(
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
