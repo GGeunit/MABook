@@ -25,7 +25,12 @@ class _ExpenseShowState extends State<ExpenseShow> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('지출 상세'),
+        backgroundColor: Colors.green,
+        title: const Text(
+          '지출 상세',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
       ),
       body: Obx(() {
         final expense = expenseController.currentExpense.value;

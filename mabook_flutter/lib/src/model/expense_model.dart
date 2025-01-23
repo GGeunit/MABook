@@ -22,7 +22,7 @@ class ExpenseModel {
     price = m['price'] is String
         ? double.tryParse(m['price'])
         : m['price']?.toDouble();
-    date = DateTime.parse(m['date']);
+    date = DateTime.parse(m['date']).toLocal();
   }
 
   ExpenseModel copyWith({

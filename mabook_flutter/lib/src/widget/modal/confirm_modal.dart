@@ -22,11 +22,11 @@ class ConfirmModal extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           onPressed: cancel,
-          child: const Text('취소'),
+          child: const Text('취소', style: TextStyle(color: Colors.green)),
         ),
         TextButton(
           onPressed: confirmAction,
-          child: Text(confirmText),
+          child: Text(confirmText, style: TextStyle(color: Colors.green)),
         ),
       ],
     );

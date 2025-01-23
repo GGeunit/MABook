@@ -1,9 +1,10 @@
-import 'package:carrot_flutter/src/controller/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../controller/user_controller.dart';
 import 'expense/index.dart';
 import 'my/mypage.dart';
+import 'static/index.dart';
 
 final List<BottomNavigationBarItem> myTabs = [
   BottomNavigationBarItem(
@@ -21,7 +22,8 @@ final List<BottomNavigationBarItem> myTabs = [
 ];
 final List<Widget> myTabItems = [
   ExpenseIndex(),
-  Center(child: Text('통계')),
+  // Center(child: Text('통계')),
+  StaticIndex(),
   MyPage(),
 ];
 

@@ -1,4 +1,5 @@
 import 'package:carrot_flutter/src/controller/user_controller.dart';
+import 'package:carrot_flutter/src/screen/expense/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +12,14 @@ class MyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(UserController());
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        title: const Text(
+          '마이페이지',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,16 +37,12 @@ class MyPage extends StatelessWidget {
             // ),
 
             // 기타메뉴
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                '마이페이지',
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-            ),
             ListTile(
               title: const Text('지출내역'),
               leading: const Icon(Icons.receipt_long_outlined),
+              onTap: () {
+                Get.to(() => ExpenseIndex());
+              },
             ),
             ListTile(
               title: const Text('로그아웃'),

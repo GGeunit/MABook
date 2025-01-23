@@ -3,15 +3,14 @@ import 'package:get/get.dart';
 
 import '../../controller/expense_controller.dart';
 import '../../widget/listitem/expense_list_item.dart';
-import 'create.dart';
 
-class ExpenseIndex extends StatefulWidget {
-  const ExpenseIndex({super.key});
+class StaticIndex extends StatefulWidget {
+  const StaticIndex({super.key});
   @override
-  State<ExpenseIndex> createState() => _ExpenseIndexState();
+  State<StaticIndex> createState() => _StaticIndexState();
 }
 
-class _ExpenseIndexState extends State<ExpenseIndex> {
+class _StaticIndexState extends State<StaticIndex> {
   final ExpenseController expenseController =
       Get.put<ExpenseController>(ExpenseController());
   int _currentPage = 1;
@@ -36,17 +35,10 @@ class _ExpenseIndexState extends State<ExpenseIndex> {
       appBar: AppBar(
         backgroundColor: Colors.green,
         title: const Text(
-          '내 가계부',
+          '지출 통계',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.to(() => const ExpenseCreate());
-        },
-        backgroundColor: Colors.green,
-        child: const Icon(Icons.add, color: Colors.white),
       ),
       body: Column(
         children: [
