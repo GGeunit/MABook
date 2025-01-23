@@ -23,7 +23,7 @@ final List<BottomNavigationBarItem> myTabs = [
 final List<Widget> myTabItems = [
   ExpenseIndex(),
   CategoryIndex(),
-  Center(child: Text('통계')),
+  // Center(child: Text('통계')),
   MyPage(),
 ];
 

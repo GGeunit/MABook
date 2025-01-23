@@ -52,6 +52,7 @@ exports.show = async (req, res) => {
     res.json({ result: 'ok', data: item });
   }
 }
+
 exports.update = async (req, res) => {
   const { name } = req.body;
   const user = req.user;
