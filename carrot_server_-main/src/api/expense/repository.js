@@ -18,7 +18,7 @@ exports.index = async (page, size, keyword) => {
     params.push(keywordParam, keywordParam);
   }
 
-  query += ` ORDER BY e.id ASC LIMIT ? OFFSET ?`;
+  query += ` ORDER BY e.date DESC LIMIT ? OFFSET ?`;
   params.push(size.toString(), offset.toString());
 
   return await pool.query(query, params);

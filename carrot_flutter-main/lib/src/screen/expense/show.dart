@@ -37,29 +37,62 @@ class _ExpenseShowState extends State<ExpenseShow> {
         if (expense != null) {
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '카테고리:\n${expense.category.name}',
-                  style: Theme.of(context).textTheme.titleLarge,
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              elevation: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '카테고리',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: Colors.green, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      expense.category.name,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    const Divider(height: 24, thickness: 1),
+                    Text(
+                      '설명',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: Colors.green, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      expense.description,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    const Divider(height: 24, thickness: 1),
+                    Text(
+                      '가격',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: Colors.green, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '${NumberFormat.currency(locale: 'ko_KR', symbol: '₩').format(expense.price)}',
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    const Divider(height: 24, thickness: 1),
+                    Text(
+                      '날짜',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: Colors.green, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      DateFormat('yyyy-MM-dd').format(expense.date),
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 16),
-                Text(
-                  '설명:\n${expense.description}',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  '가격:\n${NumberFormat.currency(locale: 'ko_KR', symbol: '₩').format(expense.price)}',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  '날짜:\n${DateFormat('yyyy-MM-dd').format(expense.date)}',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              ],
+              ),
             ),
           );
         } else {
