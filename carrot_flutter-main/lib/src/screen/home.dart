@@ -1,4 +1,5 @@
 import 'package:carrot_flutter/src/controller/user_controller.dart';
+import 'package:carrot_flutter/src/screen/category/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,7 +26,7 @@ final List<BottomNavigationBarItem> myTabs = [
 ];
 final List<Widget> myTabItems = [
   ExpenseIndex(),
-  Center(child: Text('동네')),
+  CategoryIndex(),
   Center(child: Text('채팅')),
   MyPage(),
 ];
