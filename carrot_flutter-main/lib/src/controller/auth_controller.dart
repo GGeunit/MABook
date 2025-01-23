@@ -36,4 +36,15 @@ class AuthController extends GetxController {
         snackPosition: SnackPosition.BOTTOM);
     return false;
   }
+
+  Future<void> logout() async {
+    Map body = await authProvider.logout();
+    if (body['result'] == 'ok') {
+      await box.remove('access_token');
+      Get.offAllNamed('/intro');
+    } else {
+      Get.snackbar('로그아웃 에러', body['message'],
+          snackPosition: SnackPosition.BOTTOM);
+    }
+  }
 }

@@ -23,3 +23,14 @@ exports.update = async (id, name) => {
   const query = `UPDATE user SET name = ? WHERE id = ?`;
   return await pool.query(query, [name, id]);
 }
+exports.changePassword = async (id, newPassword) => {
+  const query = `UPDATE user SET password = ? WHERE id = ?`;
+  try {
+    const result = await pool.query(query, [newPassword, id]);
+    console.log('Database changePassword result:', result); // 디버깅 로그 추가
+    return result;
+  } catch (error) {
+    console.error('Error changing user password:', error);
+    throw error;
+  }
+};

@@ -16,4 +16,18 @@ class UserProvider extends Provider {
     final response = await put('/api/user/my', body);
     return response.body;
   }
+
+  Future<Map> changePassword(String currentPassword, String newPassword) async {
+    final Map<String, dynamic> body = {
+      'current_password': currentPassword,
+      'new_password': newPassword,
+    };
+    final response = await put('/user/change-password', body);
+
+    if (response.body != null) {
+      return response.body;
+    } else {
+      return {'result': 'fail', 'message': '서버 응답이 없습니다.'};
+    }
+  }
 }

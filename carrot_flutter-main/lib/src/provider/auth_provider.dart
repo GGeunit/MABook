@@ -17,4 +17,9 @@ class AuthProvider extends Provider {
     });
     return response.body;
   }
+
+  Future<Map> logout() async {
+    final response = await get('/user/logout');
+    return response.body;
+  }
 }
