@@ -57,7 +57,14 @@ class _ExpenseEditState extends State<ExpenseEdit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('내 지출 수정')),
+      appBar: AppBar(
+        title: const Text('내 지출 수정'),
+        titleTextStyle: const TextStyle(
+            color: Colors.white, fontSize: 21, fontWeight: FontWeight.bold),
+        elevation: 0,
+        centerTitle: true,
+        backgroundColor: Colors.green,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -113,6 +120,9 @@ class _ExpenseEditState extends State<ExpenseEdit> {
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: ElevatedButton(
                 onPressed: _submit,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                ),
                 child: const Text('작성 완료'),
               ),
             ),
